@@ -11,7 +11,8 @@ public class SearchPage {
             activeSearchInput = $(".text-field__element:nth-child(1)"),
             suggestDropdown = $(".dropdown-item"),
             searchResultsBlock = $(".page_results__row.row"),
-            subwayOnComplexCard = $(".subway");
+            subwayOnComplexCard = $(".subway"),
+            builderOnComplexCard = $(".obj-card-body__item");
 
 
     public SearchPage openSearchPage(){
@@ -48,6 +49,13 @@ public class SearchPage {
     public SearchPage checkSuccsessfulSearchByMetro(String value){
         sleep(5000); //иначе не успеет прогрузится
         subwayOnComplexCard.shouldHave(text(value));
+
+        return this;
+    }
+
+    public SearchPage checkSuccsessfulSearchByBuilder(String value){
+        sleep(5000); //иначе не успеет прогрузится
+        builderOnComplexCard.shouldHave(text(value));
 
         return this;
     }

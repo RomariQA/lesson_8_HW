@@ -20,7 +20,6 @@ public class TestBase {
         Configuration.browserSize = "1920x1080";
         Configuration.baseUrl = "https://trendrealty.ru";
         Configuration.pageLoadStrategy = "eager";
-        Configuration.holdBrowserOpen = true;
     }
 
     @BeforeEach //избавялемся от попапа выбора города

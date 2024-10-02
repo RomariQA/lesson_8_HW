@@ -3,7 +3,10 @@ package tests;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import pages.SearchPage;
 
@@ -17,7 +20,10 @@ public class SearchPageTests extends TestBase {
             "Цветной город",
             "Янила Драйв"
     })
-    @Tag("SMOKE")
+    @Tags({
+            @Tag("SMOKE"),
+            @Tag("REGRESS")
+    })
     @ParameterizedTest(name = "По ЖК {0}")
     void successfulComplexSearchTest(String SearchComplex) {
         searchPage
@@ -28,13 +34,15 @@ public class SearchPageTests extends TestBase {
                 .checkSuccsessfulSearchByComplex(SearchComplex);
     }
 
-    @Disabled ("TRR-9999")
+//    @Disabled ("TRR-9999")
     @DisplayName("Соответствие выдачи по метро")
-    @ValueSource(strings = {
+    @CsvSource(value = {
             "Озерки",
             "Василеостровская"
     })
-    @Tag("REGRESS")
+    @Tags({
+            @Tag("REGRESS")
+    })
     @ParameterizedTest(name =  "По метро {0}")
     void successfulComplexSearchForSubwayTest(String SearchSubway){
         searchPage
@@ -44,4 +52,20 @@ public class SearchPageTests extends TestBase {
                 .clickOnObjectInSuggest()
                 .checkSuccsessfulSearchByMetro(SearchSubway);
     }
+
+    @DisplayName("Соответствие выдачи по застройщику")
+    @CsvFileSource (resources = "/test_data/Builders.csv")
+    @Tags({
+            @Tag("REGRESS")
+    })
+    @ParameterizedTest(name =  "По затройщику {0}")
+    void successfulComplexSearchForBuilderTest(String SearchBuilder){
+        searchPage
+                .openSearchPage()
+                .activateInputField()
+                .setValueOnInputField(SearchBuilder)
+                .clickOnObjectInSuggest()
+                .checkSuccsessfulSearchByBuilder(SearchBuilder);
+    }
+
 }
